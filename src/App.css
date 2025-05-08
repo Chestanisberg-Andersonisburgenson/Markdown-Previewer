@@ -3,4 +3,31 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  ;
+  
+}
+
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width : 60vw;
+}
+
+#editor {
+  border: 1px solid #ccc;
+  width : 40%;
+  height : 30%;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+#preview {
+  border: 1px solid #ccc;
+  width : 50%;
+  height : 50%;
+  padding: 5px;
+  font-size: 1.2rem;
 }

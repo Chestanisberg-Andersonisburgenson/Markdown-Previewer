@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.scss'
+import DOMPurify  from 'dompurify';
 
 function App() {
   const [editorText, setEditorText] = useState<string>('');
 
   const handleEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditorText(event.target.value);
+    setEditorText(DOMPurify.sanitize(event.target.value));
   };
 
   return (
@@ -13,7 +14,8 @@ function App() {
       <div id="main">
         <h1>Markdown Previewer</h1>
         <textarea id="editor" placeholder="Type here..." onChange={handleEditorChange}></textarea>
-        <div id="preview">{editorText}</div>
+        <h2>Preview</h2>
+        <div id="preview" dangerouslySetInnerHTML={{__html: editorText}}></div>
       </div>
     </>
   )

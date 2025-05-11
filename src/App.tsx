@@ -1,13 +1,24 @@
 import { useState } from 'react'
 import './App.scss'
 import DOMPurify  from 'dompurify';
+import { marked } from 'marked';
+
+marked.setOptions({
+  breaks: true, // interpret line breaks as <br>
+  gfm: true     // GitHub Flavored Markdown
+});
 
 function App() {
   const [editorText, setEditorText] = useState<string>('');
 
-  const handleEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditorText(DOMPurify.sanitize(event.target.value));
+  const handleEditorChange = async(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const html = await marked(event.target.value);
+    const sanitizedHtml = DOMPurify.sanitize(html);   
+    console.log('Raw HTML:', sanitizedHtml); //REMOVE WHEN FINISHED
+    setEditorText(sanitizedHtml);
   };
+
+
 
   return (
     <>

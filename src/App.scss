@@ -12,23 +12,28 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
-  width : 60vw;
+
 }
 
 #editor {
   border: 1px solid #ccc;
-  width : 40%;
-  height : 30%;
+  width : 38vw;
+  height : 35vh;
   padding: 5px;
   font-size: 1.2rem;
+  overflow-y: auto;
 }
 
 #preview {
   border: 1px solid #ccc;
-  width : 50%;
-  height : 50%;
   padding: 5px;
   font-size: 1.2rem;
   background-color: rgba(128, 128, 128, 0.192);
+  min-height: 40vh;
+  width: 38vw;
+  overflow-x: auto; /* or hidden if you want no scrollbars */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;  
 }

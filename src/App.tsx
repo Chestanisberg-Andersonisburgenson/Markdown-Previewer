@@ -8,25 +8,53 @@ marked.setOptions({
   gfm: true     // GitHub Flavored Markdown
 });
 
+const defaultMarkdown = `# Markdown Previewer
+
+## Welcome to my React Markdown Previewer!
+
+### Type code here
+
+[Link to FreeCodeCamp](https://www.freecodecamp.org/learn/front-end-development-libraries/#basic-html-and-html5)
+
+Here is some inline code: \`console.log('Hello World!');\`
+
+Here is a list:
+- Item 1
+- Item 2
+- Item 3
+
+> "The only limit to our realization of tomorrow is our doubts of today."  
+> – Franklin D. Roosevelt
+
+\`\`\`js
+const hello = "Hello World!";
+console.log(hello);
+\`\`\`
+
+Here is an image:  
+![oof](https://i.kinja-img.com/image/upload/c_fit,q_60,w_645/77275af33e4165c1f07a612184d16b55.jpg)
+
+**This is bold**
+`
+
 function App() {
-  const [editorText, setEditorText] = useState<string>('');
+  const [editorText, setEditorText] = useState<string>(defaultMarkdown);
+  const [previewText, setPreviewText] = useState<string>("");
 
   const handleEditorChange = async(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const html = await marked(event.target.value);
+    const eventText = event.target.value;
+    setEditorText(eventText);
+    const html = await marked(eventText);
     const sanitizedHtml = DOMPurify.sanitize(html);   
-    console.log('Raw HTML:', sanitizedHtml); //REMOVE WHEN FINISHED
-    setEditorText(sanitizedHtml);
+    setPreviewText(sanitizedHtml);
   };
-
-
 
   return (
     <>
       <div id="main">
-        <h1>Markdown Previewer</h1>
-        <textarea id="editor" placeholder="Type here..." onChange={handleEditorChange}></textarea>
+        <textarea id="editor" defaultValue={editorText} onChange={handleEditorChange}/>
         <h2>Preview</h2>
-        <div id="preview" dangerouslySetInnerHTML={{__html: editorText}}></div>
+        <div id="preview" dangerouslySetInnerHTML={{__html: previewText}}/>
       </div>
     </>
   )

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.scss'
 import DOMPurify  from 'dompurify';
 import { marked } from 'marked';
@@ -38,37 +38,23 @@ Here is an image:
 `
 
 function App() {
-  const [editorText, setEditorText] = useState<string>("");
-  const [previewText, setPreviewText] = useState<string>("");
+  const [editorText, setEditorText] = useState<string>(defaultMarkdown);
+  const initialHtml = DOMPurify.sanitize(marked.parse(defaultMarkdown) as string) as string;
+  const [previewText, setPreviewText] = useState<string>(initialHtml);
 
 
-const convertToHtml = async(markdown: string) :Promise<string> => {
-  const html = await marked(markdown);
-  return await DOMPurify.sanitize(html);
-}
 
-
-useEffect(() => {
-    convertToHtml(defaultMarkdown).then((html) => {
-      setEditorText(defaultMarkdown);
-      setPreviewText(html);
-    });
-  }
-  , []);
-
-
-  const handleEditorChange = async(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const eventText = event.target.value;
-    setEditorText(eventText);
-    const html = await marked(eventText);
-    const sanitizedHtml = DOMPurify.sanitize(html);   
-    setPreviewText(sanitizedHtml);
+  const handleEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = event.target.value;
+    setEditorText(newText);
+    const sanitizedHtml = DOMPurify.sanitize(marked.parse(newText) as string) as string;
+    setPreviewText(sanitizedHtml);   
   };
 
   return (
     <>
       <div id="main">
-        <textarea id="editor" defaultValue={editorText} onChange={handleEditorChange}/>
+        <textarea id="editor" value={editorText} onChange={handleEditorChange}/>
         <h2>Preview</h2>
         <div id="preview" dangerouslySetInnerHTML={{__html: previewText}}/>
       </div>

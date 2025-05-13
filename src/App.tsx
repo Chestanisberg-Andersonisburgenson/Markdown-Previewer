@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.scss'
 import DOMPurify  from 'dompurify';
 import { marked } from 'marked';
@@ -38,8 +38,24 @@ Here is an image:
 `
 
 function App() {
-  const [editorText, setEditorText] = useState<string>(defaultMarkdown);
+  const [editorText, setEditorText] = useState<string>("");
   const [previewText, setPreviewText] = useState<string>("");
+
+
+const convertToHtml = async(markdown: string) :Promise<string> => {
+  const html = await marked(markdown);
+  return await DOMPurify.sanitize(html);
+}
+
+
+useEffect(() => {
+    convertToHtml(defaultMarkdown).then((html) => {
+      setEditorText(defaultMarkdown);
+      setPreviewText(html);
+    });
+  }
+  , []);
+
 
   const handleEditorChange = async(event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const eventText = event.target.value;

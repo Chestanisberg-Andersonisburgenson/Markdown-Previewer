@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.scss'
 import DOMPurify  from 'dompurify';
 import { marked } from 'marked';
+import { FaExpandArrowsAlt, FaCompressArrowsAlt } from 'react-icons/fa';
 
 marked.setOptions({
   breaks: true, // interpret line breaks as <br>
@@ -42,6 +43,8 @@ function App() {
   const initialHtml = DOMPurify.sanitize(marked.parse(defaultMarkdown) as string) as string;
   const [previewText, setPreviewText] = useState<string>(initialHtml);
 
+  const [isEditorExpanded, setIsEditorExpanded] = useState<boolean>(false);
+  const [isPreviewExpanded, setIsPreviewExpanded] = useState<boolean>(false);
 
 
   const handleEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -52,13 +55,25 @@ function App() {
   };
 
   return (
-    <>
+    
       <div id="main">
+        <div className="title-box">
+          <h1 className="title">Editor</h1>
+          <button className="expand-button" onClick={() => setIsEditorExpanded(!isEditorExpanded)}>
+            {isEditorExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
+          </button>
+        </div>
         <textarea id="editor" value={editorText} onChange={handleEditorChange}/>
-        <h2>Preview</h2>
+        
+        <div className="title-box">
+          <h1 className="title">Preview</h1>
+          <button className="expand-button" onClick={() => setIsPreviewExpanded(!isPreviewExpanded)}>
+            {isPreviewExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
+          </button>
+        </div>
         <div id="preview" dangerouslySetInnerHTML={{__html: previewText}}/>
       </div>
-    </>
+    
   )
 }
 

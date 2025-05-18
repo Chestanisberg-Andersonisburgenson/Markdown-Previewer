@@ -13,7 +13,7 @@
   background-color: rgba(35, 35, 35, 0.424);
 }
 
-#editor {
+.editor {
   border: 1px solid #ccc;
   height : 35vh;
   padding: 5px;
@@ -21,7 +21,7 @@
   overflow-y: auto;
 }
 
-#preview {
+.preview {
   border: 1px solid #ccc;
   padding: 5px;
   font-size: 1.2rem;
@@ -59,6 +59,25 @@
   height: 100%;
 
 }
+
+.hidden {
+  display: none;
+}
+
+.expanded {
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 1.2rem;
+  min-height: 120vh;
+  background-color: black;
+  overflow-x: auto; /* or hidden if you want no scrollbars */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal; 
+}
+  
+    
 
 #editor,#preview{
   background-color: rgba(56, 56, 56, 0.682);

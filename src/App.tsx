@@ -54,26 +54,42 @@ function App() {
     setPreviewText(sanitizedHtml);   
   };
 
+  const handleEditorExpand = () => {
+    setIsEditorExpanded((prev) => !prev);
+  }
+
+  const handlePreviewExpand = () => {
+    setIsPreviewExpanded((prev) => !prev);
+  }
+
+  const editorClass = isEditorExpanded ? "expanded" : "editor";
+  const previewClass = isPreviewExpanded ? "expanded" : "preview";
+  
   return (
     
       <div id="main">
-        <div className="title-box">
-          <h1 className="title">Editor</h1>
-          <button className="expand-button" onClick={() => setIsEditorExpanded(!isEditorExpanded)}>
-            {isEditorExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
-          </button>
+        <div className={`${isPreviewExpanded ? "hidden" : "editor-container"}`}>
+          <div className="title-box">
+            <h1 className="title">Editor</h1>
+            <button className="expand-button"  onClick={handleEditorExpand}>
+              {isEditorExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
+            </button>
+          </div>
+          <textarea id="editor" className={editorClass} value={editorText} onChange={handleEditorChange}/>
         </div>
-        <textarea id="editor" value={editorText} onChange={handleEditorChange}/>
         
-        <div className="title-box">
-          <h1 className="title">Preview</h1>
-          <button className="expand-button" onClick={() => setIsPreviewExpanded(!isPreviewExpanded)}>
-            {isPreviewExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
-          </button>
+        <div className={`${isEditorExpanded ? "hidden" : "preview-container"}`}>
+          <div className="title-box">
+            <h1 className="title">Preview</h1>
+            <button className="expand-button" onClick={handlePreviewExpand}>
+              {isPreviewExpanded ? <FaCompressArrowsAlt /> : <FaExpandArrowsAlt />}
+            </button>
+          </div>
+          <div id="preview" className={previewClass} dangerouslySetInnerHTML={{__html: previewText}}/>
         </div>
-        <div id="preview" dangerouslySetInnerHTML={{__html: previewText}}/>
       </div>
-    
+
+      
   )
 }
 

@@ -2,6 +2,7 @@
   "name": "markdown-previewer",
   "private": true,
   "version": "0.0.0",
+  "https": "github.com/Chestanisberg-Andersonisburgenson/Markdown-Previewer",
   "type": "module",
   "scripts": {
     "dev": "vite",
